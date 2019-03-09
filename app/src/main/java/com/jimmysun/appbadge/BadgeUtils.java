@@ -64,12 +64,6 @@ public class BadgeUtils {
                     return setHTCBadge(count, context);
                 case "sony":
                     return setSonyBadge(count, context);
-                case "nokia":
-                    return setNotificationBadge(count, context);
-                case "google":
-                    return setNotificationBadge(count, context);
-                case "oneplus":
-                    return setNotificationBadge(count, context);
                 default:
                     return setNotificationBadge(count, context);
             }
@@ -85,7 +79,7 @@ public class BadgeUtils {
             return false;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //8.0之后添加角标需要NotificationChannel
+            // 8.0之后添加角标需要NotificationChannel
             NotificationChannel channel = new NotificationChannel("badge", "badge",
                     NotificationManager.IMPORTANCE_DEFAULT);
             channel.setShowBadge(true);
@@ -105,6 +99,14 @@ public class BadgeUtils {
                 .setNumber(count)
                 .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL).build();
         // 小米
+        if (Build.BRAND.equalsIgnoreCase("xiaomi")) {
+            setXiaomiBadge(count, notification);
+        }
+        notificationManager.notify(notificationId++, notification);
+        return true;
+    }
+
+    private static void setXiaomiBadge(int count, Notification notification) {
         try {
             Field field = notification.getClass().getDeclaredField("extraNotification");
             Object extraNotification = field.get(notification);
@@ -114,8 +116,6 @@ public class BadgeUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        notificationManager.notify(notificationId++, notification);
-        return true;
     }
 
     private static boolean setHuaweiBadge(int count, Context context) {
