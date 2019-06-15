@@ -11,3 +11,5 @@
 * 诺基亚
 * 一加
 * Android原生
+## 博客地址
+[史上最全Android应用角标适配方法](https://blog.csdn.net/u013541140/article/details/84822317)
